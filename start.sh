@@ -215,14 +215,7 @@ function START_ONLINE()
     [ -z "$MODE" ] && echo "⚠ Error: MODE variable is not defined!" >&2 && exit 1
     grep -w $MODE <<< "RUN DEBUG EVAL" &> /dev/null
     [ $? -ne 0 ] && echo "⚠ Error: Invalid MODE \"$MODE\"!" >&2 && exit 1
-    printenv
     [ -f  $HOME/vpl_environment.sh ] && source $HOME/vpl_environment.sh
-    echo "======================================="
-    echo "======================================="
-    echo "======================================="
-    echo "======================================="
-    echo "======================================="
-    printenv
     mkdir -p $RUNDIR/inputs
     # [ ! -z "$VPL_SUBFILES" ] && ( cd $HOME && cp $VPL_SUBFILES $RUNDIR/inputs ) # FIXME: here bug if file contains spaces
     for var in ${!VPL_SUBFILE@} ; do
