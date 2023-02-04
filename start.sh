@@ -215,10 +215,10 @@ function START_ONLINE()
     [ -z "$MODE" ] && echo "⚠ Error: MODE variable is not defined!" >&2 && exit 1
     grep -w $MODE <<< "RUN DEBUG EVAL" &> /dev/null
     [ $? -ne 0 ] && echo "⚠ Error: Invalid MODE \"$MODE\"!" >&2 && exit 1
+    printenv
     [ -f  $HOME/vpl_environment.sh ] && source $HOME/vpl_environment.sh
     mkdir -p $RUNDIR/inputs
     # [ ! -z "$VPL_SUBFILES" ] && ( cd $HOME && cp $VPL_SUBFILES $RUNDIR/inputs ) # FIXME: here bug if file contains spaces
-    set -x
     for var in ${!VPL_SUBFILE@} ; do
         # $var => variable name  and ${!var} => variable value
         [ "$var" = "VPL_SUBFILES" ] && continue
@@ -233,7 +233,6 @@ function START_ONLINE()
         cp -f "$file" $RUNDIR/inputs &> /dev/null
         [ ! $? -eq 0 ] && echo "⚠ Error: cannot copy input file \"$file\" in inputs directory!"
     done
-    set +x 
     rm -rf $RUNDIR/vpltoolkit/.git/ &> /dev/null # for security issue
     # prepare environment
     INPUTS="$RUNDIR/inputs/"
